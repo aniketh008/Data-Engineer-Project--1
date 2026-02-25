@@ -1,191 +1,178 @@
-🚀 Project 1 – Enterprise-Grade Customer Account Data Pipeline (Azure)
-📌 Overview
+# 🚀 Project 1 – Enterprise-Grade Customer Account Data Pipeline (Azure)
 
-This project demonstrates the design and implementation of a production-ready Azure data pipeline built using modern cloud data engineering principles.
+## 📌 Overview
 
-The solution ingests raw banking datasets, processes them through a multi-layered architecture (Bronze → Silver → Gold), and delivers curated data into Azure SQL Database for analytics and reporting.
+This project demonstrates the design and implementation of a production-ready Azure data pipeline built using modern cloud data engineering best practices.
 
-Designed with scalability, modularity, and enterprise best practices in mind.
+The solution ingests raw banking datasets, processes them through a Medallion Architecture (Bronze → Silver → Gold), and delivers curated data into Azure SQL Database for analytics and reporting.
 
-🏗 Architecture Overview
-ETL Workflow
+Designed with scalability, modularity, and enterprise-grade standards in mind.
 
-The architecture follows the Medallion Design Pattern:
+---
 
-Bronze Layer (Raw) – Immutable raw ingestion
+## 🏗 Architecture Overview
 
-Silver Layer (Cleaned) – Standardized & validated datasets
+### ETL Workflow
+![ETLWorkflow](./ETLWorkflow.png)
 
-Gold Layer (Curated) – Business-ready structured data
+The pipeline follows the Medallion Architecture pattern:
 
-🎯 Business Objective
+- **Bronze Layer (Raw)** – Immutable raw data ingestion  
+- **Silver Layer (Cleaned)** – Standardized, validated, transformed data  
+- **Gold Layer (Curated)** – Business-ready dimensional model  
+
+---
+
+## 🎯 Business Objective
 
 Build a scalable Azure-based ETL framework to:
 
-Ingest customer banking datasets from backend storage
+- Ingest structured banking datasets from backend storage
+- Perform cleansing and schema standardization
+- Apply business transformation logic including SCD Type 1 & Type 2
+- Load curated datasets into Azure SQL Database
+- Enable downstream reporting through Power BI
 
-Perform cleansing and schema standardization
+---
 
-Apply business transformations including SCD logic
+# 🔄 End-to-End Data Engineering Workflow
 
-Load curated data into Azure SQL Database
+## 🟤 Step 1: Data Ingestion (Source → Bronze Layer)
 
-Enable downstream reporting in Power BI
+**Source**
+- Local File System  
+- Files:
+  - accounts.csv
+  - customers.csv
+  - loan_payments.csv
+  - loans.csv
+  - transactions.csv
 
-🔄 End-to-End Data Engineering Workflow
-🟤 Step 1: Data Ingestion (Source → Bronze Layer)
+**Dataset Reference**
+- AI Bank Dataset (Kaggle)
 
-Source
+**Implementation**
+- Built parameterized Azure Data Factory pipelines
+- Ingested raw files into Azure Data Lake Storage Gen2 (Bronze container)
+- Designed ingestion framework for scalability and reusability
 
-Local File System
+**Design Considerations**
+- Schema drift handling
+- Re-runnable pipeline logic
+- Folder-based partitioning strategy
+- Metadata-driven ingestion
 
-Files:
+---
 
-accounts.csv
+## ⚪ Step 2: Data Cleansing (Bronze → Silver Layer)
 
-customers.csv
+Data transformation implemented using Azure Data Factory Mapping Data Flows:
 
-loan_payments.csv
+- Removed duplicate records
+- Handled missing/null values
+- Applied schema validation
+- Standardized column naming conventions
+- Performed data type transformations
+- Output written in optimized Parquet/Delta format
 
-loans.csv
+The Silver layer acts as a trusted, validated data zone.
 
-transactions.csv
+---
 
-Dataset Reference
-AI Bank Dataset (Kaggle)
+## 🟡 Step 3: Data Transformation (Silver → Gold Layer)
 
-Process
+Applied business logic and dimensional modeling principles:
 
-Built parameterized ADF pipelines
+### Key Implementations
 
-Ingested raw files into Azure Data Lake Storage Gen2 (Raw/Bronze container)
+- SCD Type 1 (Overwrite strategy)
+- SCD Type 2 (Historical tracking with effective & expiry dates)
+- Surrogate key generation
+- Fact and dimension table modeling
+- Referential integrity enforcement
 
-Enabled metadata-driven ingestion for scalability
+Final curated data loaded into:
 
-Design Considerations
-
-Schema drift handling
-
-Re-runnable pipeline logic
-
-Folder-based partitioning strategy
-
-⚪ Step 2: Data Cleansing (Bronze → Silver Layer)
-
-Implemented transformation logic using Azure Data Factory Mapping Data Flows:
-
-Removed duplicate records
-
-Handled nulls and missing attributes
-
-Applied consistent schema and data type conversions
-
-Standardized column naming conventions
-
-Generated optimized Parquet/Delta outputs
-
-Silver layer acts as the trusted, validated data zone.
-
-🟡 Step 3: Data Transformation (Silver → Gold Layer)
-
-This layer applies business logic and prepares dimensional models.
-
-Key Implementations:
-
-SCD Type 1 (Overwrite logic for non-historical changes)
-
-SCD Type 2 (History tracking with effective & expiry dates)
-
-Surrogate key generation
-
-Fact and dimension table modeling
-
-Final curated data is loaded into:
-
-➡ Azure SQL Database
+➡ **Azure SQL Database**
 
 Designed for:
+- Optimized query performance
+- BI consumption
+- Structured relational analytics
 
-Optimized query performance
+---
 
-BI consumption
-
-Structured relational analytics
-
-🔁 Pipeline Orchestration
+## 🔁 Pipeline Orchestration
 
 Three modular pipelines were developed:
 
-Local → Bronze
+1. Local → Bronze
+2. Bronze → Silver
+3. Silver → Gold
 
-Bronze → Silver
+### Features
 
-Silver → Gold
+- Parameterized datasets
+- Dynamic pipeline execution
+- Trigger-based scheduling
+- Dependency chaining
+- Centralized monitoring
+- Secure secret management via Azure Key Vault
 
-Features include:
+---
 
-Parameterized datasets
+## 📊 Data Visualization
 
-Pipeline triggers (scheduled execution)
+### Dashboard
+![Dashboard](./Dashboard.png)
 
-Dependency chaining
+- Connected Power BI to Azure SQL Database
+- Designed dashboards for:
+  - Customer Account Analysis
+  - Loan Performance Metrics
+  - Transaction Insights
+- Published reports to Microsoft Fabric Workspace
 
-Failure handling & monitoring
+---
 
-Secure secret management via Azure Key Vault
+# ⚙️ Key Engineering Highlights
 
-📊 Data Visualization (Power BI)
+- Medallion architecture implementation
+- Modular and reusable pipeline design
+- Secure credential management using Azure Key Vault
+- Scalable storage using Parquet/Delta format
+- Business-driven dimensional modeling
+- Production-ready orchestration framework
 
-Connected Power BI to Azure SQL Database
+---
 
-Designed business KPIs for:
+# 🛠 Technology Stack
 
-Customer analysis
+- Azure Data Factory
+- Azure Data Lake Storage Gen2
+- Azure SQL Database
+- Azure Key Vault
+- Power BI
+- Parquet / Delta Lake
 
-Loan performance
+---
 
-Transaction insights
+## 💡 What This Project Demonstrates
 
-Published dashboards to Microsoft Fabric Workspace
+This project reflects hands-on experience in:
 
-⚙️ Key Engineering Highlights
+- Designing scalable cloud-native data architectures
+- Building enterprise-grade ETL/ELT pipelines
+- Implementing SCD logic in Azure
+- Dimensional modeling for analytics
+- Secure and maintainable data engineering solutions
 
-✔ Medallion architecture implementation
+---
 
-✔ Dynamic and reusable ADF pipelines
+## 🔗 Connect With Me
 
-✔ Secure credential management using Azure Key Vault
+LinkedIn: https://www.linkedin.com/in/aniketh8/
 
-✔ Incremental load ready design
+---
 
-✔ Optimized storage format (Parquet/Delta)
-
-✔ Modular and scalable framework
-
-🛠 Technology Stack
-
-Azure Data Factory
-
-Azure Data Lake Storage Gen2
-
-Azure SQL Database
-
-Azure Key Vault
-
-Power BI
-
-Delta / Parquet format
-
-💡 What This Project Demonstrates
-
-As an Azure Data Engineer with 4+ years of experience, this project reflects:
-
-Strong understanding of cloud-native data architecture
-
-Experience building enterprise ETL frameworks
-
-Hands-on implementation of SCD logic
-
-Data modeling and BI integration capabilities
-
-Production-grade orchestration and security practices
+Thank you for reviewing this project.
